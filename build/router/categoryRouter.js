@@ -1,0 +1,27 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.categoryRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const category_deviceBusiness_1 = require("../business/category-deviceBusiness");
+const categoryBusiness_1 = require("../business/categoryBusiness");
+const category_deviceController_1 = require("../controller/category-deviceController");
+const categoryController_1 = require("../controller/categoryController");
+const category_deviceDatabase_1 = require("../data/category-deviceDatabase");
+const categoryDatabase_1 = require("../data/categoryDatabase");
+const deviceDatabase_1 = require("../data/deviceDatabase");
+exports.categoryRouter = express_1.default.Router();
+const categoryDatabase = new categoryDatabase_1.CategoryDatabase();
+const categoryBusiness = new categoryBusiness_1.CategoryBusiness(categoryDatabase);
+const categoryController = new categoryController_1.CategoryController(categoryBusiness);
+const deviceDatabase = new deviceDatabase_1.DeviceDatabase();
+const categoryDeviceDatabase = new category_deviceDatabase_1.CategoryDeviceDatabase();
+const categoryDeviceBusiness = new category_deviceBusiness_1.CategoryDeviceBusiness(categoryDeviceDatabase, deviceDatabase, categoryDatabase);
+const categoryDeviceController = new category_deviceController_1.CategoryDeviceController(categoryDeviceBusiness);
+exports.categoryRouter.get("/", (req, res) => categoryController.getAll(req, res));
+exports.categoryRouter.post("/create", (req, res) => categoryController.create(req, res));
+exports.categoryRouter.post("/add-to-device", (req, res) => categoryDeviceController.AddCategoryToDevice(req, res));
+exports.categoryRouter.delete("/delete/:name", (req, res) => categoryController.delete(req, res));
+exports.categoryRouter.delete("/remove-from-device/:name", (req, res) => categoryDeviceController.deleteCategoryFromDevices(req, res));
