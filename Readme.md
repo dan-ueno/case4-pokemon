@@ -40,4 +40,4 @@ usuário pode definir a página e limitar a quantidade de resultados exibidos, a
 
 ## Postman
 
-https://documenter.getpostman.com/view/15825766/UUxwBoPt
+https://documenter.getpostman.com/view/15825766/UV5WDJEt
